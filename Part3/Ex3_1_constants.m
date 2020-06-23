@@ -1,0 +1,14 @@
+m = 0.5
+L = 0.225
+k = 0.01
+b = 0.001
+kD = 0.01
+D = diag([kD, kD, kD])
+Ixx = 3e-6
+Iyy = 3e-6
+Izz = 1e-5
+I = diag([Ixx, Iyy, Izz])
+g = [0, 0, -9.81]'
+mmat = diag([m, m, m])
+attMtx = [L*k, 0, -L*k, 0; 0, L*k, 0, -L*k; b, -b, b, -b; 1, 1, 1, 1]
+posMtx = [0, -1, 0; 1, 0, 0]
