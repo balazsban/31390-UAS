@@ -10,9 +10,11 @@ DEG2RAD =           pi/180;
 THRUST_OFFSET =     15;
 MAX_ROTOR_VEL =     838;
 
-L = 0.225;
+L = 0.17;
 k = 8.54858e-06;
 b = 1.3678e-07;
+m = 0.716;
+g = 9.81;
 %%
 attMtx = [L*k, 0, -L*k, 0; 0, L*k, 0, -L*k; b, -b, b, -b; 1, 1, 1, 1];
 
