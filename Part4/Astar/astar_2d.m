@@ -1,4 +1,4 @@
-function [ route ] = greedy_2d( map, start, end_, length_cost )
+function [ route ] = astar_2d( map, start, end_, length_cost )
     % Check if length_cost was given
     if ~exist('length_cost', 'var')
         length_cost = 1;
@@ -21,7 +21,8 @@ function [ route ] = greedy_2d( map, start, end_, length_cost )
     parent_node.position = start;
     parent_node.h = parent_node.calc_dist(end_);
     parent_node.f = parent_node.h;
-
+    parent_node.g = 0;
+    
     % Flag used to skip nodes which is already added
     continue_flag = 0;
 
@@ -58,6 +59,7 @@ function [ route ] = greedy_2d( map, start, end_, length_cost )
                                     % Note that this node is not 
                                     % to be added to children
                                     continue_flag = 1;
+                                    break
                                 end
                             end
 
@@ -76,8 +78,9 @@ function [ route ] = greedy_2d( map, start, end_, length_cost )
                             % Calculate the distance from the node
                             % to the end point
                             temp_node.h = temp_node.calc_dist(end_);
+                            temp_node.g = parent_node.g + temp_node.calc_dist(parent_node);
                             % Calculate the total cost of the node
-                            temp_node.f = temp_node.h;
+                            temp_node.f = temp_node.h + temp_node.g;
 
                             % Add the node to the children array
                             % Check if it is the first child
@@ -95,13 +98,14 @@ function [ route ] = greedy_2d( map, start, end_, length_cost )
             end
         end
 
-    % Add the parent node to the list of closed nodes
-    if first_closed == 1
-        first_closed = 0;
-        closed = [parent_node]; 
-    else
-        closed(end+1) = parent_node;
-    end
+        % Add the parent node to the list of closed nodes
+        if first_closed == 1
+            first_closed = 0;
+            closed = [parent_node]; 
+        else
+            closed(end+1) = parent_node;
+        end
+        
         % Choose the child node with the lowest f value
         lowest_f = 999999;
         lowest_child_i = -1;
@@ -135,6 +139,7 @@ function [ route ] = greedy_2d( map, start, end_, length_cost )
        % Update the route by going backwards through the parents
        parent_node = parent_node.parent;
        route = cat(1,route,parent_node.position);
+       %route(end+1,:) = parent_node.position;
     end
     route = flip(route);
 end

@@ -1,5 +1,5 @@
 % Define constants
-FIXED_STEP_SIZE =   0.01;
+FIXED_STEP_SIZE =   0.05;
 POS_SUB_DT =        0.01;
 ATTI_SUB_DT =       0.01;
 IMU_SUB_DT =        0.01;
