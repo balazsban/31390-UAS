@@ -36,8 +36,8 @@ function [ route ] = astar_2d( map, start, end_, length_cost )
         % Run through the surronding squares
         for x = -1:1
             for y = -1:1
-                % Skip the node itself
-                if ~(x == 0 && y == 0)
+                % Skip the node itself and the diagonal neighbors
+                if ~((x == 0 && y == 0) || (abs(x) == 1 && abs(y) == 1))
                     node_pos = [parent_node.position(1) + x, ...
                                 parent_node.position(2) + y];
                     % Check if the children is within the map
@@ -58,8 +58,12 @@ function [ route ] = astar_2d( map, start, end_, length_cost )
                                 if node_pos == children(child_i).position
                                     % Note that this node is not 
                                     % to be added to children
+                                    new_g = parent_node.g + children(child_i).calc_dist(parent_node.position);
+                                    if new_g < children(child_i).g
+                                        children(child_i).g = new_g;
+                                        children(child_i).f = new_g + children(child_i).h;
+                                    end
                                     continue_flag = 1;
-                                    break
                                 end
                             end
 
@@ -78,7 +82,7 @@ function [ route ] = astar_2d( map, start, end_, length_cost )
                             % Calculate the distance from the node
                             % to the end point
                             temp_node.h = temp_node.calc_dist(end_);
-                            temp_node.g = parent_node.g + temp_node.calc_dist(parent_node);
+                            temp_node.g = parent_node.g + temp_node.calc_dist(parent_node.position);
                             % Calculate the total cost of the node
                             temp_node.f = temp_node.h + temp_node.g;
 

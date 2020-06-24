@@ -27,7 +27,7 @@ map(start(1),start(2)) = 0;
 map(end_(1),end_(2)) = 0;
 
 %% Run the algorithm to optain the route
-route = greedy_2d(map, start, end_);
+route = astar_2d(map, start, end_);
 
 
 %% Draw the map
