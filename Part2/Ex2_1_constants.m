@@ -8,9 +8,11 @@ Ixx = 3e-6
 Iyy = 3e-6
 Izz = 1e-5
 I = diag([Ixx, Iyy, Izz])
-g = [0, 0, -9.81]'
-mmat = diag([m, m, m])
+g = 9.81
+g_vec = [0, 0, -m*g]'
 Omega = [0, 0, 0, 0]'
+tmp = sqrt(m*g/4/k)
+omega_e = [tmp, tmp, tmp, tmp]'
 
 % Linearized system at hovering conditions
 % states: x, y, z, xdot, ydot, zdot, phi, theta, psi, wx, wy, wz
