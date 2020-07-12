@@ -20,4 +20,4 @@ RAD2DEG =           180/pi;
 DEG2RAD =           pi/180;
 THRUST_OFFSET =     15;
 
-q = 1;
+
